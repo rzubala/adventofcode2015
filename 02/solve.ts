@@ -19,12 +19,15 @@ class Solve2 extends FileReader {
   };
 
   private process = () => {
-    const area = this.data.reduce((area, line) => {
+    const result = this.data.reduce((total, line) => {
       const parts = line.split('x').map(e => +e).sort((a,b) => a-b)
-      area += 2*parts[0]*parts[1] + 2*parts[0]*parts[2] + 2*parts[1]*parts[2] + parts[0]*parts[1]
-      return area
-    }, 0)
-    console.log(area)
+      const area = 2*parts[0]*parts[1] + 2*parts[0]*parts[2] + 2*parts[1]*parts[2] + parts[0]*parts[1]
+      total['area'] = area + (total['area'] || 0)
+      const ribbon = 2*parts[0] + 2*parts[1] + parts[0] * parts[1] * parts[2]
+      total['ribbon'] = ribbon + (total['ribbon'] || 0)
+      return total
+    }, {})
+    console.log(result)
   };
 }
 
