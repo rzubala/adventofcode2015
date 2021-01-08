@@ -38,19 +38,32 @@ class Solve3 extends FileReader {
 
   run = async () => {
     await this.init();
-    this.process();
+    const visited = {}
+    this.process(visited);
+    console.log(Object.values(visited).length)
+
+    const visitedRobot = {}
+    this.process(visitedRobot, true);
+    this.process(visitedRobot, false);
+    console.log(Object.values(visitedRobot).length)
   };
 
-  private process = () => {
+  private process = (visited: object, even?: boolean) => {
     let point = {x:0, y:0}
-    const visited = {}
     visited[toKey(point)] = true    
+    let cnt = 0
     for (let move of this.data.split('')) {
+      cnt++
+      if (even !== undefined && even && (cnt - 1) % 2 === 1) {
+        continue
+      }
+      if (even !== undefined && !even && (cnt - 1) % 2 === 0) {
+        continue
+      }      
       point = moves[move](point)
       const key = toKey(point)
       visited[key] = true
-    }
-    console.log(Object.values(visited).length)
+    }    
   };
 }
 
