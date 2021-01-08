@@ -18,8 +18,24 @@ class Solve1 extends FileReader {
     this.process();
   };
 
-  private process = () => {
-    console.log(this.data);
+  private process = () => {    
+    const up = (this.data[0].match(/\(/g) || []).length;
+    const down = (this.data[0].match(/\)/g) || []).length;
+    console.log(up-down)
+    let floor = 0
+    let cnt = 0
+    for (let s of this.data[0]) {
+      if (s === '(') {
+        floor++
+      } else {
+        floor--
+      }
+      cnt++
+      if (floor === -1) {
+        console.log(cnt)
+        break
+      }
+    }
   };
 }
 
